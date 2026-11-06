@@ -1,6 +1,12 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import TeacherManagement from "./teacher-management";
+import ClassManagement from "./class-management";
+import AcademicManagement from "./academic-management";
+import StudentManagement from "./student-management";
+import SubjectManagement from "./subject-management";
+import ClassSubjectManagement from "./class-subject-management";
+import TeacherAssignmentManagement from "./teacher-assignment-management";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -81,6 +87,12 @@ export default async function DashboardPage() {
         {isAdmin && (
           <div className="mt-12">
             <TeacherManagement />
+            <ClassManagement />
+            <AcademicManagement />
+            <StudentManagement />
+            <SubjectManagement />
+            <ClassSubjectManagement />
+            <TeacherAssignmentManagement />
           </div>
         )}
 

@@ -26,5 +26,7 @@ export async function GET(request: Request) {
     );
   }
 
-  return NextResponse.redirect(new URL("/dashboard", requestUrl.origin));
+  return NextResponse.redirect(
+    new URL("/auth/set-password", requestUrl.origin),
+  );
 }

@@ -7,6 +7,7 @@ type Teacher = {
   full_name: string;
   email: string;
   role: string;
+  status: "Invitation pending" | "Email confirmed" | "Active";
 };
 
 export default function TeacherManagement() {
@@ -306,8 +307,16 @@ export default function TeacherManagement() {
                       </div>
                     </div>
 
-                    <span className="w-fit rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
-                      Teacher account
+                    <span
+                      className={`w-fit rounded-full px-3 py-1.5 text-xs font-semibold ${
+                        teacher.status === "Active"
+                          ? "bg-green-50 text-green-700"
+                          : teacher.status === "Email confirmed"
+                            ? "bg-blue-50 text-blue-700"
+                            : "bg-amber-50 text-amber-700"
+                      }`}
+                    >
+                      {teacher.status}
                     </span>
                   </div>
                 ))}
