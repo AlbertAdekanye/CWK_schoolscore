@@ -16,23 +16,50 @@ export default function SetPasswordPage() {
 
   useEffect(() => {
     const supabase = createClient();
+    let mounted = true;
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!mounted) return;
+
+      if (
+        session &&
+        (event === "PASSWORD_RECOVERY" ||
+          event === "INITIAL_SESSION" ||
+          event === "SIGNED_IN")
+      ) {
+        setSessionReady(true);
+        setCheckingSession(false);
+        setError("");
+      }
+    });
 
     async function checkSession() {
       const { data, error } = await supabase.auth.getSession();
 
-      if (error || !data.session) {
+      if (!mounted) return;
+
+      if (data.session) {
+        setSessionReady(true);
+        setCheckingSession(false);
+      } else if (error) {
+        setError(error.message);
+        setCheckingSession(false);
+      } else {
         setError(
-          "Your password setup link is invalid or expired. Request a new one.",
+          "Your password setup link is invalid or expired. Request a fresh recovery link.",
         );
         setCheckingSession(false);
-        return;
       }
-
-      setSessionReady(true);
-      setCheckingSession(false);
     }
 
     checkSession();
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
