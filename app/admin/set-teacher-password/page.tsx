@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function SetTeacherPasswordPage() {
   const [teacherId, setTeacherId] = useState(
-    "76b73436-52fd-45d0-9bd6-635b284c2841",
+    "48027594-8da7-4f64-a59b-6ac483c4a9a0",
   );
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -14,7 +14,6 @@ export default function SetTeacherPasswordPage() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     setMessage("");
     setError("");
 
@@ -33,13 +32,8 @@ export default function SetTeacherPasswordPage() {
     try {
       const response = await fetch("/api/teacher/set-password", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          teacherId,
-          password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teacherId, password }),
       });
 
       const result = await response.json();
@@ -69,8 +63,7 @@ export default function SetTeacherPasswordPage() {
         </h1>
 
         <p className="mt-2 text-sm text-slate-500">
-          Temporary local development tool. Sign in as a school administrator
-          before continuing.
+          Sign in as a school administrator before continuing.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -78,7 +71,6 @@ export default function SetTeacherPasswordPage() {
             <label className="mb-2 block text-sm font-medium text-slate-700">
               Teacher ID
             </label>
-
             <input
               type="text"
               value={teacherId}
@@ -92,7 +84,6 @@ export default function SetTeacherPasswordPage() {
             <label className="mb-2 block text-sm font-medium text-slate-700">
               New password
             </label>
-
             <input
               type="password"
               value={password}
@@ -109,7 +100,6 @@ export default function SetTeacherPasswordPage() {
             <label className="mb-2 block text-sm font-medium text-slate-700">
               Confirm password
             </label>
-
             <input
               type="password"
               value={confirmPassword}

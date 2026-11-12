@@ -1,3 +1,4 @@
+import TeacherScoreEntry from "./teacher-score-entry";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import TeacherManagement from "./teacher-management";
@@ -95,6 +96,8 @@ export default async function DashboardPage() {
             <TeacherAssignmentManagement />
           </div>
         )}
+
+        {!isAdmin && <TeacherScoreEntry />}
 
         <section className="mt-12">
           <h2 className="text-xl font-bold">Your workspaces</h2>
